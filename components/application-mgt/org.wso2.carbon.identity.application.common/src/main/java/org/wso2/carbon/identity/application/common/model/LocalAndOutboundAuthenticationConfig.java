@@ -54,7 +54,7 @@ public class LocalAndOutboundAuthenticationConfig implements Serializable {
     private static final String AUTHENTICATION_STEPS = "AuthenticationSteps";
     private static final String AUTHENTICATION_GRAPH = "AuthenticationGraph";
     private static final String AUTHENTICATION_SCRIPT = "AuthenticationScript";
-    private static final String EXTERNALIZED_CONSENT_PAGE_CONFIG = "ExternalizedConsentPageConfig";
+    private static final String USE_EXTERNALIZED_CONSENT_PAGE = "useExternalizedConsentPage";
 
     @XmlElementWrapper(name = "AuthenticationSteps")
     @XmlElement(name = "AuthenticationStep")
@@ -96,8 +96,8 @@ public class LocalAndOutboundAuthenticationConfig implements Serializable {
     @XmlElement(name = AUTHENTICATION_SCRIPT)
     private AuthenticationScriptConfig authenticationScriptConfig;
 
-    @XmlElement(name = EXTERNALIZED_CONSENT_PAGE_CONFIG)
-    private ExternalizedConsentPageConfig externalizedConsentPageConfig;
+    @XmlElement(name = USE_EXTERNALIZED_CONSENT_PAGE)
+    private boolean useExternalizedConsentPage = false;
 
     /*
      * <LocalAndOutboundAuthenticationConfig> <AuthenticationSteps></AuthenticationSteps>
@@ -192,9 +192,10 @@ public class LocalAndOutboundAuthenticationConfig implements Serializable {
                 if (Boolean.parseBoolean(member.getText())) {
                     localAndOutboundAuthenticationConfig.setSkipLogoutConsent(true);
                 }
-            } else if (EXTERNALIZED_CONSENT_PAGE_CONFIG.equals(member.getLocalName())) {
-                localAndOutboundAuthenticationConfig.externalizedConsentPageConfig = ExternalizedConsentPageConfig
-                        .build(member);
+            } else if (USE_EXTERNALIZED_CONSENT_PAGE.equals(member.getLocalName())) {
+                if (Boolean.parseBoolean(member.getText())) {
+                    localAndOutboundAuthenticationConfig.setUseExternalizedConsentPage(true);
+                }
             }
         }
 
@@ -351,14 +352,14 @@ public class LocalAndOutboundAuthenticationConfig implements Serializable {
         this.skipLogoutConsent = skipLogoutConsent;
     }
 
-    public ExternalizedConsentPageConfig getExternalizedConsentPageConfig() {
+    public boolean isUseExternalizedConsentPage() {
 
-        return externalizedConsentPageConfig;
+        return useExternalizedConsentPage;
     }
 
-    public void setExternalizedConsentPageConfig(ExternalizedConsentPageConfig externalizedConsentPageConfig) {
+    public void setUseExternalizedConsentPage(boolean useExternalizedConsentPage) {
 
-            this.externalizedConsentPageConfig = externalizedConsentPageConfig;
+            this.useExternalizedConsentPage = useExternalizedConsentPage;
     }
 
 }
