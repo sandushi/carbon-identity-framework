@@ -43,16 +43,19 @@ public class JsNashornStep extends AbstractJSContextMemberObject implements Abst
 
     private int step;
     private String authenticatedIdp;
+    private String currentAuthenticator;
 
-    public JsNashornStep(int step, String authenticatedIdp) {
+    public JsNashornStep(int step, String authenticatedIdp, String currentAuthenticator) {
 
         this.step = step;
         this.authenticatedIdp = authenticatedIdp;
+        this.currentAuthenticator = currentAuthenticator;
     }
 
-    public JsNashornStep(AuthenticationContext context, int step, String authenticatedIdp) {
+    public JsNashornStep(AuthenticationContext context, int step, String authenticatedIdp,
+                         String currentAuthenticator) {
 
-        this(step, authenticatedIdp);
+        this(step, authenticatedIdp, currentAuthenticator);
         initializeContext(context);
     }
 
