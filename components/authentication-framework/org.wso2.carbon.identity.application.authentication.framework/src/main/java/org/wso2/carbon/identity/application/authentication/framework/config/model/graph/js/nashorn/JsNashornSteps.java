@@ -60,10 +60,10 @@ public class JsNashornSteps extends AbstractJSContextMemberObject implements Abs
         if (getContext() == null) {
             return AbstractJsObject.super.getSlot(step);
         } else {
-            return new JsNashornStep(getContext(), step, getAuthenticatedIdPOfStep(step), getAuthenticatorOfStep(step));
+            return new JsNashornStep(getContext(), step, getAuthenticatedIdPOfStep(step),
+                    getAuthenticatedAuthenticatorOfStep(step));
         }
     }
-
 
     private String getAuthenticatedIdPOfStep(int step) {
 
@@ -77,7 +77,7 @@ public class JsNashornSteps extends AbstractJSContextMemberObject implements Abs
         return optionalStepConfig.map(StepConfig::getAuthenticatedIdP).orElse(null);
     }
 
-    private String getAuthenticatorOfStep(int step) {
+    private String getAuthenticatedAuthenticatorOfStep(int step) {
 
         if (getContext().getSequenceConfig() == null) {
             //Sequence config is not yet initialized
